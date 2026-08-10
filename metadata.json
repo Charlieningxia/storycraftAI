@@ -1,0 +1,6 @@
+{
+  "name": "StoryCraft AI - AI Video Prompt Studio",
+  "description": "Commercial-grade multi-style AI video prompt generator featuring 8 visual styles, character consistency locks, cinematic camera templates, and story preset suites for Runway, Kling, Veo, & Pika.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

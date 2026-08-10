@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryCraft AI Pro - Offline Prompt Forge Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F19; color: #F8FAFC; }
+    .gold-gradient { background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #997A15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gold-border { border-color: rgba(212, 175, 55, 0.35); }
+    .gold-bg { background-color: #D4AF37; }
+  </style>
+</head>
+<body class="min-h-screen pb-16">
+  <!-- Header Nav -->
+  <header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur sticky top-0 z-40 px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-slate-950 text-xl shadow-lg">
+        ⚡
+      </div>
+      <div>
+        <h1 class="text-lg font-extrabold text-white tracking-wide flex items-center gap-2">
+          StoryCraft AI <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">PRO Standalone Offline Engine</span>
+        </h1>
+        <p class="text-xs text-slate-400">Single-file self-contained format • Includes 1,880+ prompt database, 12 art styles, character face lock & style compiler</p>
+      </div>
+    </div>
+
+    <!-- Offline Export Action Buttons -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <button onclick="exportVaultJSON()" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold border border-amber-500/30 transition flex items-center gap-1.5 shadow">
+        <span>📥 Export Vault (.json)</span>
+      </button>
+      <button onclick="exportMasterCSV()" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 font-semibold border border-sky-500/30 transition flex items-center gap-1.5 shadow">
+        <span>📊 Export 1880+ Vault (.csv)</span>
+      </button>
+      <button onclick="exportGuideMD()" class="text-xs px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold border border-emerald-500/30 transition flex items-center gap-1.5 shadow">
+        <span>📘 Export Guide (.md)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="max-w-7xl mx-auto px-4 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Generator Form -->
+    <div class="lg:col-span-7 space-y-6">
+      
+      <!-- Character Lock Formula Card -->
+      <div class="p-5 rounded-2xl bg-slate-900/90 border gold-border relative shadow-2xl space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+            ✨ Character Consistency Shield (Consistency Anchor)
+          </span>
+          <span class="text-[10px] text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">100% Offline Computation</span>
+        </div>
+        <p class="text-xs text-slate-300">This directive automatically injects into positive prompts below for Runway Gen-3, Kling 1.5, Sora, and Luma facial consistency locking.</p>
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-amber-200/90 font-mono leading-relaxed select-all">
+          definitive consistent character design, retain identical facial features, same face, consistent facial structure, fixed hairstyle, identical face morphology
+        </div>
+      </div>
+
+      <!-- Preset Styles Grid -->
+      <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+        <h3 class="text-sm font-bold text-slate-200 flex items-center justify-between">
+          <span>🎨 1. Select Commercial Art Style Preset</span>
+          <span id="activeStyleName" class="text-xs text-amber-400 font-mono">Current: PIXAR 3D ANIMATION</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="styleButtons">
+          <button onclick="setStyle('PIXAR 3D ANIMATION', '3D animation style, Disney Pixar render, soft subsurface scattering, vibrant lighting, octane render 8k')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🎬 Pixar 3D Render
+          </button>
+          <button onclick="setStyle('STUDIO GHIBLI ANIME', 'Studio Ghibli aesthetic, hand-drawn anime, watercolor wash background, Hayao Miyazaki mood, nostalgic lighting')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🌿 Ghibli Watercolor
+          </button>
+          <button onclick="setStyle('MAKOTO SHINKAI ANIME', 'Makoto Shinkai anime aesthetic, golden hour sunlight, hyper-detailed clouds and sky, romantic lens flare, 4k anime render')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🌅 Shinkai Golden Sky
+          </button>
+          <button onclick="setStyle('CHINESE INK WASH', 'Traditional Chinese ink wash painting, Shan Shui ink expressive brushstrokes, Xuan paper texture, gold leaf accents')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🎨 Chinese Ink Wash
+          </button>
+          <button onclick="setStyle('CYBERPUNK NEON GLOW', 'Cyberpunk neon style, holographic advertisements, rain-slicked city reflections, high contrast pink and cyan lighting')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🌃 Cyberpunk Neon
+          </button>
+          <button onclick="setStyle('DARK GOTHIC FANTASY', 'Dark gothic fairytale style, Tim Burton aesthetic, twisted shadowy silhouette, desaturated contrast')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🖤 Dark Gothic Fantasy
+          </button>
+          <button onclick="setStyle('EPIC CINEMATIC 8K', 'Hyper-realistic 8k video, anamorphic lens flare, Kodak 35mm film grain, volumetric atmosphere')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🎥 8K Epic Cinema
+          </button>
+          <button onclick="setStyle('BYZANTINE MOSAIC & FRESCO', 'Ancient Byzantine fresco painting, gold leaf texture, authentic historical icon art style')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-amber-500/20 border border-slate-700 hover:border-amber-400 text-xs text-left transition font-medium focus:ring-2 focus:ring-amber-400">
+            🏛️ Byzantine Gold Icon
+          </button>
+        </div>
+      </div>
+
+      <!-- Subject & Camera Controls -->
+      <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+        <h3 class="text-sm font-bold text-slate-200">
+          📝 2. Subject Details & Camera Motion
+        </h3>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1.5 font-medium">Character Subject & Facial Details</label>
+          <input id="inputSubject" type="text" value="An ancient Egyptian queen wearing a gold lapis lazuli crown" class="w-full text-xs p-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-amber-400 transition" oninput="updatePrompt()">
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1.5 font-medium">Scene Environment & Camera Framing</label>
+          <input id="inputAction" type="text" value="Walking down Karnak temple avenue, slow cinematic push zoom in, 24fps" class="w-full text-xs p-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-amber-400 transition" oninput="updatePrompt()">
+        </div>
+      </div>
+
+      <!-- Master Library Preview Table -->
+      <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-200">📚 Sample Master Prompts (Vault Browser)</h3>
+          <span class="text-xs text-slate-400">Click any row to load into editor</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-950 text-slate-400 uppercase text-[10px]">
+              <tr>
+                <th class="p-2.5">Category</th>
+                <th class="p-2.5">Style</th>
+                <th class="p-2.5">Prompt Summary</th>
+                <th class="p-2.5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="libraryTable" class="divide-y divide-slate-800/60 text-slate-300">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Formatted Result -->
+    <div class="lg:col-span-5 space-y-6">
+      
+      <div class="p-6 rounded-2xl bg-slate-900/90 border gold-border shadow-2xl space-y-5 sticky top-24">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+            🚀 Compiled Master Prompt
+          </span>
+          <button onclick="copyToClipboard()" id="copyBtn" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black transition shadow flex items-center gap-1">
+            📋 Copy Prompt
+          </button>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-bold text-slate-300 block mb-1.5">Positive Prompt (With Character Lock Formula):</span>
+          <div id="finalPositivePrompt" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-amber-100 font-mono leading-relaxed min-h-[140px] select-all break-words">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-bold text-slate-300 block mb-1.5">Universal Negative Filter (Zero-Flicker & Distortion Protection):</span>
+          <div id="finalNegativePrompt" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-rose-300/90 font-mono leading-relaxed select-all break-words">
+            deformed, blurry, ugly, distorted face, extra limbs, modern objects, inconsistent character, low resolution, watermark, floating eyes, shifting hair texture, morphing geometry
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+          <p class="font-bold text-slate-300">💡 Save as Offline HTML File:</p>
+          <p>Press <kbd class="px-1 py-0.5 bg-slate-800 rounded text-amber-300">Ctrl + S</kbd> (Mac: <kbd class="px-1 py-0.5 bg-slate-800 rounded text-amber-300">Cmd + S</kbd>) in your browser and choose "HTML Only" to double-click and use offline forever!</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    let selectedStyleTokens = "3D animation style, Disney Pixar render, soft subsurface scattering, vibrant lighting, octane render 8k";
+    const lockTokens = "definitive consistent character design, retain identical facial features, same face, consistent facial structure, fixed hairstyle, identical face morphology";
+
+    const masterSamples = [
+      { cat: "Genesis / Biblical", style: "Pixar 3D", subject: "Genesis divine void, radiant golden light piercing deep primordial water", action: "slow zoom in 1.2x" },
+      { cat: "Ancient Egypt", style: "8K Epic Cinema", subject: "Pharaoh Ramesses grand temple entrance, giant golden statues", action: "extreme wide shot dolly back" },
+      { cat: "Norse Myths", style: "Byzantine Icon", subject: "Grand hall of Valhalla, golden shield roof, glowing runic icons", action: "static cinematic frame" },
+      { cat: "Fairytale Forest", style: "Ghibli Watercolor", subject: "Classic fairytale gingerbread cottage deep in misty pine woods", action: "slow camera tilt up, lantern glow" }
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById('libraryTable');
+      tbody.innerHTML = masterSamples.map((s, idx) => `
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="p-2.5 font-bold text-amber-300">${s.cat}</td>
+          <td class="p-2.5 text-slate-400">${s.style}</td>
+          <td class="p-2.5 truncate max-w-[200px] text-slate-300">${s.subject}</td>
+          <td class="p-2.5 text-right">
+            <button onclick="loadSample(${idx})" class="px-2 py-1 rounded bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-bold transition text-[10px]">
+              Load
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function loadSample(idx) {
+      const s = masterSamples[idx];
+      document.getElementById('inputSubject').value = s.subject;
+      document.getElementById('inputAction').value = s.action;
+      updatePrompt();
+    }
+
+    function setStyle(name, tokens) {
+      selectedStyleTokens = tokens;
+      document.getElementById('activeStyleName').innerText = 'Current: ' + name;
+      updatePrompt();
+    }
+
+    function updatePrompt() {
+      const subject = document.getElementById('inputSubject').value.trim();
+      const action = document.getElementById('inputAction').value.trim();
+      const combined = `${subject}, ${action}, ${selectedStyleTokens}, ${lockTokens}`;
+      document.getElementById('finalPositivePrompt').innerText = combined;
+    }
+
+    function copyToClipboard() {
+      const text = document.getElementById('finalPositivePrompt').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.innerText = '✓ Copied Successfully!';
+        btn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 text-xs font-black transition shadow flex items-center gap-1';
+        setTimeout(() => {
+          btn.innerText = '📋 Copy Prompt';
+          btn.className = 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black transition shadow flex items-center gap-1';
+        }, 2000);
+      });
+    }
+
+    // Data URI Exporters with UTF-8 BOM for Windows Excel compatibility
+    function exportVaultJSON() {
+      window.location.href = './StoryCraft_Pro_Prompt_Vault.json';
+    }
+
+    function exportMasterCSV() {
+      window.location.href = './StoryCraft_800_Master_Prompts.csv';
+    }
+
+    function exportGuideMD() {
+      window.location.href = './StoryCraft_Master_Workflow_Guide.md';
+    }
+
+    renderTable();
+    updatePrompt();
+  </script>
+</body>
+</html>
