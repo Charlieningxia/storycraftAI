@@ -72,7 +72,7 @@ export const GumroadMonetizationSection: React.FC<GumroadMonetizationSectionProp
             className="w-full px-6 py-2.5 rounded-full text-xs font-black bg-[#D4AF37] hover:bg-amber-400 text-slate-950 transition-all shadow-lg flex items-center justify-center space-x-2"
           >
             <ShoppingBag className="w-4 h-4 fill-current" />
-            <span>🛒 前往 GUMROAD 商店购买 ($19)</span>
+            <span>🛒 BUY ON GUMROAD STORE ($19)</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 
@@ -82,7 +82,7 @@ export const GumroadMonetizationSection: React.FC<GumroadMonetizationSectionProp
             className="w-full px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-white/10 flex items-center justify-center space-x-1.5"
           >
             <Key className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>{isProUnlocked ? '已激活 PRO 权限 / 查看资产' : '输入激活码 / 更多支付通道'}</span>
+            <span>{isProUnlocked ? 'PRO License Active / View Assets' : 'Enter License Key / More Options'}</span>
           </button>
 
           <p className="text-[10px] text-slate-400 flex items-center gap-1 justify-center pt-1">

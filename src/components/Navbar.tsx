@@ -55,19 +55,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-800 border border-emerald-500/30 transition-colors cursor-pointer"
-              title="已解锁付费权限：点击打开离线单页应用并下载提示词库"
+              title="PRO Unlocked: Click to open offline Web App & download prompt vault"
             >
               <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="font-bold">⚡ 打开离线版 Web App & 下载提示词</span>
+              <span className="font-bold">⚡ Open Offline Web App & Prompts</span>
             </a>
           ) : (
             <button
               onClick={onOpenGumroad}
               className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 border border-amber-500/30 transition-colors cursor-pointer"
-              title="PRO 专属离线应用与 1880+ 提示词库，购买或激活后即可打开"
+              title="PRO Exclusive: Offline App & 1,880+ Prompt Vault"
             >
               <BookOpen className="w-3.5 h-3.5 text-amber-600" />
-              <span className="font-bold">🔒 离线 App & 提示词库 (PRO 专属)</span>
+              <span className="font-bold">🔒 Offline App & Prompt Vault (PRO)</span>
             </button>
           )}
         </div>
