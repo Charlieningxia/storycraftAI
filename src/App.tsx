@@ -8,6 +8,7 @@ import { PromptOutputCard } from './components/PromptOutputCard';
 import { StoryboardBuilderModal } from './components/StoryboardBuilderModal';
 import { GumroadMonetizationSection, GumroadModal } from './components/GumroadMonetizationSection';
 import { PromptHistoryModal } from './components/PromptHistoryModal';
+import { TrendingPromptsSection, TrendingPromptItem } from './components/TrendingPromptsSection';
 
 import { ArtStyleId, StoryCategoryId, ShotTypeId, CameraMovementId, PlatformTarget, StoryPreset, PromptBuildOutput } from './types';
 import { buildStoryPrompt } from './utils/promptGenerator';
@@ -135,6 +136,22 @@ export default function App() {
     setIsHistoryOpen(false);
   };
 
+  // Load trending prompt into generator
+  const handleApplyTrendingPrompt = (item: TrendingPromptItem) => {
+    setStyleId(item.styleId);
+    setCategoryId(item.category);
+    setCharacterName(item.characterName);
+    setCharacterAttrs(item.characterAttrs);
+    setSceneDesc(item.sceneDesc);
+    setMoodLighting(item.moodLighting);
+    setShotType(item.shotType);
+    setCameraMovement(item.cameraMovement);
+    setPlatformTarget(item.platformTarget);
+    setAspectRatio(item.aspectRatio);
+    setMotionScale(item.motionScale);
+    setEnableCharLock(true);
+  };
+
   // AI Auto Enhance trigger
   const handleTriggerEnhance = async () => {
     setIsEnhancing(true);
@@ -213,6 +230,15 @@ export default function App() {
             onOpenStoryboardModal={() => setIsStoryboardOpen(true)}
           />
         </section>
+
+        {/* Trending AI Video Prompts Section */}
+        <TrendingPromptsSection
+          onApplyPrompt={handleApplyTrendingPrompt}
+          onOpenStoryboard={(item) => {
+            handleApplyTrendingPrompt(item);
+            setIsStoryboardOpen(true);
+          }}
+        />
 
         {/* Form Controls Container */}
         <div className="space-y-6">

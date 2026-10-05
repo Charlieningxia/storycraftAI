@@ -11,6 +11,7 @@
 
 ## ✨ Features
 
+- 🔥 **Trending Prompts Live Feed (热门提示词更新展示区)**: Real-time showcase of viral AI video prompts across TikTok, Bilibili, Runway Gen-3, Sora & Kling AI with one-click apply & copy.
 - 🎭 **Character Lock 2.0 (角色一致性锁)**: Generate character anchors with fixed facial features, proportions, and outfits across video scenes.
 - 🎬 **12 Commercial Styles**: Cyberpunk, Cinematic Sci-Fi, Pixar 3D Animation, Oriental Ink Wash, Anime, Film Noir, and more.
 - 📜 **3-Shot Storyboard Builder (三镜头分镜生成器)**: Instantly generate Shot 1 (Establishing), Shot 2 (Medium Action), and Shot 3 (Close-up Peak) with linked character anchors.

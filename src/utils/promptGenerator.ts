@@ -77,6 +77,23 @@ export function buildStoryPrompt(params: PromptBuildParams): PromptBuildOutput {
 
   const fullPrompt = `${promptParts.join('. ')}. ${platformFlags}`.trim();
 
+  // 5. Dedicated Image-to-Video (I2V / 图生视频) Motion Prompt
+  // Crucial rule: Do not repeat static character clothing/face from image; focus 100% on motion, camera, and physics!
+  const i2vMotionPrompt = `[CAMERA ACTION]: ${camera.promptModifier}. [DYNAMIC MOVEMENT]: Subject performs smooth natural action: ${params.sceneDesc.replace(/standing in ancient scenic landscape/i, 'initiating dynamic movement and dramatic physical gesture')}. [PHYSICAL DYNAMICS]: Natural cloth sway and hair physics, particle drift in air, realistic environmental reaction. [LIGHTING INTERACTION]: Volumetric light rays shifting with camera glide. Maintain exact character likeness and face geometry from source image without redrawing static features.`;
+
+  // 6. ComfyUI Node & CLIP Text Formatting
+  const comfyuiSyntax = `// === COMFYUI CLIP TEXT ENCODE (POSITIVE) ===
+${shot.promptModifier}, ${camera.promptModifier}, (cinematic motion:1.2), (temporal coherence:1.2), ${params.sceneDesc}, ${style.baseModifiers.slice(0, 3).join(', ')}, ${params.moodLighting || style.lightingStyle}
+
+// === COMFYUI MODEL-SPECIFIC DIRECTIVES ===
+// Recommended Model: Wan 2.1 (14B) / CogVideoX-5B / Kling I2V
+// Motion Strength / Bucket: ${params.motionScale * 15} | FPS: 24 | Sampler: UniPC / Euler Ancestral
+(camera_${params.cameraMovement.replace('-', '_')}:1.15), <lora:motion_dynamics:0.85>
+// Prompt Travel Schedule (FizzNodes):
+"0": "${camera.promptModifier}, begins motion",
+"16": "peak dynamic action of ${params.characterName || 'subject'}",
+"32": "smooth continuation and atmospheric particle settle"`;
+
   // Combine negative prompts
   const negativeParts = [...style.negativePrompts, SYSTEM_DEFAULT_NEGATIVE_PROMPT];
   const combinedNegativePrompt = Array.from(new Set(negativeParts.flatMap(p => p.split(', ')))).join(', ');
@@ -90,6 +107,8 @@ export function buildStoryPrompt(params: PromptBuildParams): PromptBuildOutput {
     cameraBlock,
     negativePrompt: combinedNegativePrompt,
     platformFlags: platformFlags.trim(),
+    i2vMotionPrompt,
+    comfyuiSyntax,
     createdAt: new Date().toISOString(),
     params
   };

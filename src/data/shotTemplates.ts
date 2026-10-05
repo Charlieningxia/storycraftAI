@@ -115,5 +115,32 @@ export const AI_PLATFORMS: PlatformConfig[] = [
     motionSyntax: 'cinematic_motion',
     negativeSupport: false,
     notes: 'Responds best to dense natural English descriptions.'
+  },
+  {
+    id: 'comfyui-wan21',
+    name: 'ComfyUI • Wan 2.1 (14B / 1.3B)',
+    badge: 'Open Source SOTA',
+    aspectRatios: ['16:9', '9:16', '1:1', '4:3'],
+    motionSyntax: 'action_prompt',
+    negativeSupport: true,
+    notes: 'Excels at both T2V & I2V with natural action prompts and dynamic camera control.'
+  },
+  {
+    id: 'comfyui-cogvideo',
+    name: 'ComfyUI • CogVideoX (5B/2B)',
+    badge: 'Open Source 5B',
+    aspectRatios: ['16:9', '9:16'],
+    motionSyntax: 'temporal_guidance',
+    negativeSupport: true,
+    notes: 'High responsiveness to English dynamic verbs and cinematic camera tracking.'
+  },
+  {
+    id: 'comfyui-animatediff',
+    name: 'ComfyUI • AnimateDiff (v3 / SDXL)',
+    badge: 'Motion LoRA',
+    aspectRatios: ['16:9', '9:16', '1:1'],
+    motionSyntax: 'prompt_travel',
+    negativeSupport: true,
+    notes: 'Supports FizzNodes Prompt Travel scheduling & camera Motion LoRAs (pan/zoom/tilt).'
   }
 ];

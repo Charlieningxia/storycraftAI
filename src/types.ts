@@ -80,12 +80,17 @@ export interface CameraMovementConfig {
   promptModifier: string;
 }
 
+export type VideoMode = 'all' | 't2v' | 'i2v' | 'comfyui';
+
 export type PlatformTarget =
   | 'runway-gen3'
   | 'kling-ai'
   | 'luma-dream'
   | 'pika-2'
-  | 'sora-veo';
+  | 'sora-veo'
+  | 'comfyui-wan21'
+  | 'comfyui-cogvideo'
+  | 'comfyui-animatediff';
 
 export interface PlatformConfig {
   id: PlatformTarget;
@@ -132,6 +137,8 @@ export interface PromptBuildOutput {
   cameraBlock: string;
   negativePrompt: string;
   platformFlags: string;
+  i2vMotionPrompt: string;
+  comfyuiSyntax: string;
   createdAt: string;
   params: PromptBuildParams;
 }
